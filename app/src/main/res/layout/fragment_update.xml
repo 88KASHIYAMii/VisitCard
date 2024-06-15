@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="UpdateFragment"
+    android:orientation="vertical">
+
+    <Toolbar
+        android:id="@+id/toolBar_Notes"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/imageView_save"
+                android:src="@drawable/ic_baseline_check_24"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="10dp"
+                android:background="@android:color/transparent"
+                android:layout_width="25dp"
+                android:layout_height="25dp">
+            </ImageView>
+
+            <ImageView
+                android:id="@+id/imageView_delete"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="50dp"
+                android:src="@drawable/ic_baseline_delete_24">
+            </ImageView>
+        </RelativeLayout>
+    </Toolbar>
+
+    <EditText
+        android:id="@+id/firstNameEdit"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="Введите имя"
+        android:minHeight="20dp"
+        android:singleLine="true"
+        android:textColorHint="@color/black"
+        android:textSize="15sp">
+    </EditText>
+
+    <EditText
+        android:id="@+id/secondNameEdit"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="Введите фамилию"
+        android:minHeight="20dp"
+        android:singleLine="true"
+        android:textColorHint="@color/black"
+        android:textSize="15sp">
+    </EditText>
+
+    <EditText
+        android:id="@+id/thirdNameEdit"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="Введите отчество"
+        android:minHeight="20dp"
+        android:singleLine="true"
+        android:textColorHint="@color/black"
+        android:textSize="15sp">
+    </EditText>
+
+    <EditText
+        android:id="@+id/postEdit"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="Введите должность"
+        android:minHeight="20dp"
+        android:singleLine="true"
+        android:textColorHint="@color/black"
+        android:textSize="15sp">
+    </EditText>
+
+    <EditText
+        android:id="@+id/addressEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Введите адресс"
+        android:minHeight="48dp"
+        android:singleLine="true"
+        android:textColorHint="@color/black"
+        android:textSize="15sp">
+    </EditText>
+
+    <EditText
+        android:id="@+id/phoneEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Введите номер телефона"
+        android:minHeight="48dp"
+
+        android:singleLine="true"
+        android:textColorHint="@color/black"
+        android:textSize="15sp">
+    </EditText>
+
+    <EditText
+        android:id="@+id/mailEdit"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="Введите почту"
+        android:minHeight="20dp"
+        android:singleLine="true"
+        android:textColorHint="@color/black"
+        android:textSize="15sp">
+    </EditText>
+
+</LinearLayout>

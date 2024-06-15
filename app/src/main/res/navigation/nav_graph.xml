@@ -1,0 +1,42 @@
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/cardsFragment">
+
+    <fragment
+        android:id="@+id/cardsFragment"
+        android:name="com.example.diplom.fragments.CardsFragment"
+        android:label="Заметки"
+        tools:layout="@layout/fragment_cards">
+        <action
+            android:id="@+id/cardsFragmentToCreateCardsFragment"
+            app:destination="@id/createCardsFragment" />
+        <action
+            android:id="@+id/action_cardsFragment_to_updateFragment"
+            app:destination="@id/updateFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/createCardsFragment"
+        android:name="com.example.diplom.fragments.CreateCardsFragment"
+        android:label="Создать заметку"
+        tools:layout="@layout/fragment_create_cards">
+        <action
+            android:id="@+id/createCardsFragmentToCardsFragment"
+            app:destination="@id/cardsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/updateFragment"
+        android:name="com.example.diplom.UpdateFragment"
+        android:label="Редактировать"
+        tools:layout="@layout/fragment_update" >
+        <action
+            android:id="@+id/action_updateFragment_to_cardsFragment"
+            app:destination="@id/cardsFragment" />
+        <argument
+            android:name="curCard"
+            app:argType="com.example.diplom.model.Card" />
+    </fragment>
+</navigation>

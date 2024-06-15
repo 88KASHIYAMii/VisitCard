@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:cardBackgroundColor="@color/white"
+    android:id="@+id/cards_container"
+    app:cardCornerRadius="8dp"
+    android:elevation="8dp"
+    android:layout_margin="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/nntuTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="Нижегородский Государственный Технический Университет"
+                android:textSize="12sp"
+                android:singleLine="true"> </TextView>
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/secondNameText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:hint="Фамилия"
+            android:gravity="center_horizontal"
+            android:textSize="16sp"> </TextView>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/firstNameText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Имя"
+                android:paddingTop="5dp"
+                android:paddingLeft="35dp"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/thirdNameText"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="MissingConstraints"> </TextView>
+
+            <TextView
+                android:id="@+id/thirdNameText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Отчество"
+                android:paddingTop="5dp"
+                android:textSize="16sp"
+                android:paddingRight="35dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/firstNameText"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="MissingConstraints"> </TextView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/postText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Должность"
+            android:maxLines="2"
+            android:gravity="center_horizontal"
+            android:textSize="12sp"> </TextView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/addressText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:hint="Адресс"
+                android:maxLines="2"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/phoneContainer"
+                app:layout_constraintHorizontal_bias="0.161"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                tools:ignore="MissingConstraints"> </TextView>
+
+            <LinearLayout
+                android:id="@+id/phoneContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/addressText">
+
+                <TextView
+                    android:id="@+id/phoneText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="Телефон"
+                    android:textSize="10sp"
+                    android:maxLines="1"
+                    android:gravity="center_horizontal"> </TextView>
+
+                <TextView
+                    android:id="@+id/mailText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:hint="Почта"
+                    android:textSize="10sp"
+                    android:gravity="center_horizontal"> </TextView>
+
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
