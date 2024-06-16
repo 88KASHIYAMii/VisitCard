@@ -1,10 +1,12 @@
 package com.example.diplom
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.navigation.findNavController
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.findNavController
+import com.example.diplom.R
 
 class MainActivity : AppCompatActivity() {
 
@@ -12,11 +14,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //  The proper way to get the NavController in this case is to
-        //  find the NavHostFragment and get the controller from it.
+        // Установка Toolbar в качестве ActionBar
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+
+        // Получение NavController
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         val navController = navHostFragment.navController
 
+        // Настройка ActionBar с NavController
         setupActionBarWithNavController(navController)
     }
 
