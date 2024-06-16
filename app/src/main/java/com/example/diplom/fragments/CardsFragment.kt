@@ -1,7 +1,14 @@
 package com.example.diplom.fragments
 
+import android.app.Activity
+import android.content.Context
+import android.content.pm.PackageManager
+import android.graphics.pdf.PdfDocument
 import android.os.Bundle
+import android.os.Environment
 import android.view.View
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -13,6 +20,8 @@ import com.example.diplom.R
 import com.example.diplom.adapter.CardAdapter
 import com.example.diplom.viewModel.CardViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import java.io.File
+import java.io.FileOutputStream
 
 class CardsFragment: Fragment(R.layout.fragment_cards) {
     lateinit var cViewModel: CardViewModel
@@ -22,7 +31,6 @@ class CardsFragment: Fragment(R.layout.fragment_cards) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?){
         super.onViewCreated(view, savedInstanceState)
         cViewModel = ViewModelProvider(this)[CardViewModel::class.java]
-
 
         val notesRecycler = view.findViewById<RecyclerView>(R.id.recycler)
         notesRecycler.adapter = adapter
