@@ -1,16 +1,13 @@
 package com.example.diplom.adapter
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
-import android.bluetooth.BluetoothSocket
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Paint
 import android.graphics.pdf.PdfDocument
-import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,24 +15,12 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.startActivity
 import androidx.core.content.FileProvider
-import androidx.core.os.bundleOf
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.diplom.R
-import com.example.diplom.fragments.CardsFragmentDirections
 import com.example.diplom.model.Card
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import java.io.File
-import java.io.FileInputStream
 import java.io.FileOutputStream
-import java.io.IOException
-import java.io.OutputStream
-import java.util.UUID
 
 class CardAdapter : RecyclerView.Adapter<CardAdapter.MineHolder>() {
 
@@ -124,7 +109,7 @@ class CardAdapter : RecyclerView.Adapter<CardAdapter.MineHolder>() {
         return pdfFile
     }
 
-    fun getBluetoothDeviceByName(context: Context, deviceName: String): BluetoothDevice? {
+    fun getAllBluetoothDevices(context: Context): BluetoothDevice? {
         // Получаем адаптер Bluetooth
         val bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
         if (bluetoothAdapter == null) {
@@ -138,97 +123,24 @@ class CardAdapter : RecyclerView.Adapter<CardAdapter.MineHolder>() {
                 Manifest.permission.BLUETOOTH_CONNECT
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return null
         } else
             bluetoothAdapter.bondedDevices
 
-        // Ищем устройство по имени
-        pairedDevices?.forEach { device ->
-            if (device.name == deviceName) {
-                return device
-            }
-        }
+        Toast.makeText(context, "${pairedDevices?.map { it.name }}", Toast.LENGTH_SHORT).show()
 
         // Устройство с заданным именем не найдено
         return null
     }
-
-    fun sendPdfViaBluetoothFinal(context: Context, pdfFile: File) {
-        val targetDevice = getBluetoothDeviceByName(context, "Pixel 6")
-        val socket: BluetoothSocket? =
-            if (ActivityCompat.checkSelfPermission(
-                    context,
-                    Manifest.permission.BLUETOOTH_CONNECT
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
-                return
-            } else
-            targetDevice?.createRfcommSocketToServiceRecord(UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"))
-
-        // Запускаем отдельный поток для выполнения операций Bluetooth
-        Thread(Runnable {
-            try {
-                // Инициализируем соединение
-                socket?.use { socket ->
-                    // Подключаемся к Bluetooth устройству
-                    socket.connect()
-
-                    // Отправляем файл
-                    val outputStream = socket.outputStream
-                    val bytes = ByteArray(1024)
-                    val fis = FileInputStream(pdfFile)
-                    var length: Int
-                    while (fis.read(bytes).also { length = it } != -1) {
-                        outputStream.write(bytes, 0, length)
-                    }
-
-                    // Закрываем потоки
-                    fis.close()
-                    outputStream.close()
-
-                    // Успешно отправлено
-                    GlobalScope.launch(Dispatchers.Main) {
-                        Toast.makeText(context, "Файл успешно отправлен по Bluetooth", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            } catch (e: IOException) {
-                // Ошибка при передаче
-                e.printStackTrace()
-                GlobalScope.launch(Dispatchers.Main) {
-                    Toast.makeText(context, "Ошибка при отправке файла по Bluetooth", Toast.LENGTH_SHORT).show()
-                }
-            } finally {
-                try {
-                    socket?.close()
-                } catch (e: IOException) {
-                    e.printStackTrace()
-                }
-            }
-        }).start()
-    }
-
 
     // Вспомогательная функция для вывода Toast сообщения
     fun showToast(context: Context, message: String) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
-
     fun sendPdfViaBluetooth(context: Context, pdfFile: File) {
+        getAllBluetoothDevices(context)
+
         val emailIntent = Intent(Intent.ACTION_SEND).apply {
             val uri = FileProvider.getUriForFile(
                 context,
@@ -270,51 +182,4 @@ class CardAdapter : RecyclerView.Adapter<CardAdapter.MineHolder>() {
         this.cardList = newCardList
         notifyDataSetChanged()
     }
-
-    private var bluetoothSocket: BluetoothSocket? = null
-
-    @SuppressLint("MissingPermission")
-    fun connectToDevice(context: Context, pdfFile: File) {
-        try {
-            val targetDevice = getBluetoothDeviceByName(context, "Pixel 6")
-            bluetoothSocket = targetDevice?.createRfcommSocketToServiceRecord(UUID.randomUUID())
-            bluetoothSocket?.connect()
-
-            // Вызов метода для отправки файла через BluetoothSocket
-            sendPdfViaBluetoothDirectly(bluetoothSocket!!, pdfFile)
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-    }
-
-
-    fun sendPdfViaBluetoothDirectly(socket: BluetoothSocket, pdfFile: File) {
-        val outputStream: OutputStream
-        try {
-            outputStream = socket.outputStream
-
-            // Отправляем содержимое файла
-            val fileInputStream = FileInputStream(pdfFile)
-            val buffer = ByteArray(1024)
-            var bytesRead: Int
-            while (fileInputStream.read(buffer).also { bytesRead = it } != -1) {
-                outputStream.write(buffer, 0, bytesRead)
-            }
-
-            fileInputStream.close()
-            outputStream.close()
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-    }
-
-    fun closeBluetoothSocket() {
-        try {
-            bluetoothSocket?.close()
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-    }
-
-
 }
